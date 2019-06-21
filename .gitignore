@@ -1,0 +1,12 @@
+# maven
+target/
+dependency-reduced-pom.xml
+
+# intellij
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# project
+src/main/resources/

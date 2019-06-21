@@ -1,0 +1,98 @@
+#logo-font-size {
+  font-size: 25px;
+}
+
+header img {
+  max-width: 40px;
+  height: auto;
+}
+
+.nav-back-btn {
+  font-weight: bold;
+}
+
+body {
+  font-family: 'Didact Gothic', sans-serif;
+  background-color: #F7F4E9;
+  padding-top: 80px;
+}
+
+.login-form {
+  min-width: 350px;
+}
+
+.register-form {
+  min-width: 350px;
+}
+
+.reset-password-form {
+  min-width: 350px;
+}
+
+#payments-history-table-font-size {
+  font-size: 20px;
+}
+
+#color-blue {
+  color: #254598;
+}
+
+#color-red {
+  color: #E40C2B;
+}
+
+#color-dark {
+  color: #1D1D2C;
+}
+
+#color-light {
+  color: #F7F4E9;
+}
+
+#color-aqua {
+  color: #3CBCC3;
+}
+
+#color-orange {
+  color: #EBA63F;
+}
+
+#color-green {
+  color: #438945;
+}
+
+#color-light-green {
+  color: #87c588;
+}
+
+#bg-color-blue {
+  background-color: #254598;
+}
+
+#bg-color-red {
+  background-color: #E40C2B;
+}
+
+#bg-color-dark {
+  background-color: #1D1D2C;
+}
+
+#bg-color-light {
+  background-color: #F7F4E9;
+}
+
+#bg-color-aqua {
+  background-color: #3CBCC3;
+}
+
+#bg-color-orange {
+  background-color: #EBA63F;
+}
+
+#bg-color-green {
+  background-color: #438945;
+}
+
+#bg-color-light-green {
+  background-color: #87c588;
+}
