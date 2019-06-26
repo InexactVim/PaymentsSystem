@@ -1,98 +1,218 @@
-#logo-font-size {
-  font-size: 25px;
+body {
+  font-family: 'Didact Gothic', sans-serif;
+  background-color: #F7F4E9;
+  padding: 55px 0px 5px 0px;
+  min-width: 326px;
 }
 
-header img {
-  max-width: 40px;
-  height: auto;
+/* !!!!!!!!!! */
+/* ! Navbar ! */
+/* !!!!!!!!!! */
+.navbar {
+  padding: 5px 10px 5px 10px;
+}
+
+.navbar-brand {
+  padding: 0;
+}
+
+.navbar-element {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.brand-image {
+  max-height: 40px;
+  width: auto;
+}
+
+.brand-font {
+  font-size: 24px;
+  color: #F7F4E9;
 }
 
 .nav-back-btn {
   font-weight: bold;
 }
 
-body {
-  font-family: 'Didact Gothic', sans-serif;
-  background-color: #F7F4E9;
-  padding-top: 80px;
-}
-
+/* !!!!!!!!!!!!!! */
+/* ! Login page ! */
+/* !!!!!!!!!!!!!! */
 .login-form {
-  min-width: 350px;
+  min-width: 306px;
+  width: 306px;
+  word-break: break-all;
 }
 
-.register-form {
-  min-width: 350px;
+@media (min-width: 470px) {
+  .login-form {
+    min-width: 406px;
+    width: 406px;
+  }
 }
 
+/* !!!!!!!!!!!!!!!!!!!!! */
+/* ! Registration page ! */
+/* !!!!!!!!!!!!!!!!!!!!! */
+.registration-form {
+  min-width: 306px;
+  width: 306px;
+  word-break: break-all;
+}
+
+@media (min-width: 470px) {
+  .registration-form {
+    min-width: 406px;
+    width: 406px;
+  }
+}
+
+/* !!!!!!!!!!!!!!!!!!!!!!! */
+/* ! Password reset page ! */
+/* !!!!!!!!!!!!!!!!!!!!!!! */
 .reset-password-form {
-  min-width: 350px;
+  min-width: 306px;
+  width: 306px;
+  word-break: break-all;
 }
 
-#payments-history-table-font-size {
-  font-size: 20px;
+@media (min-width: 470px) {
+  .reset-password-form {
+    min-width: 406px;
+    width: 406px;
+  }
 }
 
-#color-blue {
-  color: #254598;
-}
-
-#color-red {
-  color: #E40C2B;
-}
-
-#color-dark {
-  color: #1D1D2C;
-}
-
-#color-light {
-  color: #F7F4E9;
-}
-
-#color-aqua {
-  color: #3CBCC3;
-}
-
-#color-orange {
+/* !!!!!!!!!!!!! */
+/* ! User page ! */
+/* !!!!!!!!!!!!! */
+#log-out-btn {
   color: #EBA63F;
 }
 
-#color-green {
+/* !!!!!!!!!!!!!!!!!!!!! */
+/* ! Remove card form ! */
+/* !!!!!!!!!!!!!!!!!!!!! */
+.remove-card-form {
+  min-width: 306px;
+  width: 306px;
+  word-break: break-all;
+}
+
+@media (min-width: 470px) {
+  .remove-card-form {
+    width: 406px;
+    min-width: 406px;
+  }
+}
+
+.remove-card-font {
+  font-size: 20px;
+}
+
+/* !!!!!!!!!!!!!!!!!!!!! */
+/* ! Remove card form ! */
+/* !!!!!!!!!!!!!!!!!!!!! */
+/* .card-background {
+  height: 226px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url(../images/card.png);
+  background-size: auto 226px;
+} */
+
+/* !!!!!!!!! */
+/* ! Table ! */
+/* !!!!!!!!! */
+.table-column-header {
+  font-size: 20px;
+  line-height: 10px;
+}
+
+/* !!!!!!!!!!!!!!!!! */
+/* ! Add card form ! */
+/* !!!!!!!!!!!!!!!!! */
+.add-card-form {
+  min-width: 306px;
+  width: 306px;
+  word-break: break-all;
+}
+
+@media (min-width: 470px) {
+  .add-card-form {
+    width: 406px;
+    min-width: 406px;
+  }
+}
+
+.add-card-font {
+  font-size: 20px;
+}
+
+.color-blue {
+  color: #254598;
+}
+
+.color-red {
+  color: #E40C2B;
+}
+
+.color-dark {
+  color: #1D1D2C;
+}
+
+.color-light {
+  color: #F7F4E9;
+}
+
+.color-aqua {
+  color: #3CBCC3;
+}
+
+.color-orange {
+  color: #EBA63F;
+}
+
+.color-green {
   color: #438945;
 }
 
-#color-light-green {
+.color-light-green {
   color: #87c588;
 }
 
-#bg-color-blue {
+.bg-color-blue {
   background-color: #254598;
 }
 
-#bg-color-red {
+.bg-color-red {
   background-color: #E40C2B;
 }
 
-#bg-color-dark {
+.bg-color-dark {
   background-color: #1D1D2C;
 }
 
-#bg-color-light {
+.bg-color-light {
   background-color: #F7F4E9;
 }
 
-#bg-color-aqua {
+.bg-color-aqua {
   background-color: #3CBCC3;
 }
 
-#bg-color-orange {
+.bg-color-orange {
   background-color: #EBA63F;
 }
 
-#bg-color-green {
+.bg-color-green {
   background-color: #438945;
 }
 
-#bg-color-light-green {
+.bg-color-light-green {
   background-color: #87c588;
+}
+
+.bg-color-table {
+  background-color: #f4be41;
 }

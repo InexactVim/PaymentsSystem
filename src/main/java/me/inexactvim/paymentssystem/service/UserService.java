@@ -1,28 +1,19 @@
 package me.inexactvim.paymentssystem.service;
 
+import me.inexactvim.paymentssystem.exception.EmailIsInUsageException;
+import me.inexactvim.paymentssystem.exception.EmailMessagingException;
+import me.inexactvim.paymentssystem.exception.IncorrectCredentialsException;
+import me.inexactvim.paymentssystem.exception.DAOException;
 import me.inexactvim.paymentssystem.object.User;
-import me.inexactvim.paymentssystem.repository.UserRepository;
-import me.inexactvim.paymentssystem.security.PBKDF2WithHmacSHA1PasswordEncryption;
-import me.inexactvim.paymentssystem.security.PasswordEncryption;
 
 public interface UserService {
 
-    /*private UserRepository repository;
-    private PasswordEncryption passwordEncryption;
+    User getUser(String email) throws DAOException, IncorrectCredentialsException;
 
-    public UserService(UserRepository repository) {
-        this.repository = repository;
-        passwordEncryption = PBKDF2WithHmacSHA1PasswordEncryption.getInstance();
-    }
+    User checkCredentialsAndGetUser(String email, String password) throws DAOException, IncorrectCredentialsException;
 
-    public boolean userExists(String email) {
-        return repository.exists(email);
-    }*/
+    User saveUser(String name, String surname, String email, String password) throws DAOException, EmailIsInUsageException;
 
-    boolean isRegistered(String email);
-
-    boolean isPasswordValid(String email, String password);
-
-    User getUser(String email);
+    void resetUserPassword(String email) throws DAOException, IncorrectCredentialsException, EmailMessagingException;
 
 }

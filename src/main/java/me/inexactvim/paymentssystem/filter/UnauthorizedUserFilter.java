@@ -11,8 +11,9 @@ import java.io.IOException;
 
 @WebFilter(urlPatterns = {
         "/",
-        //"/client",
-        //"/admin/*",
+        "/admin",
+        "/user",
+        "/send_payment",
         "/account/*",
         "/cards/*"
 })

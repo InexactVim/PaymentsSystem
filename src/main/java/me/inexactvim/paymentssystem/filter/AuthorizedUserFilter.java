@@ -13,7 +13,7 @@ import java.io.IOException;
 
 @WebFilter(urlPatterns = {
         "/login",
-        "/resetPassword",
+        "/reset_password",
         "/register"
 })
 public class AuthorizedUserFilter extends HttpFilter {
@@ -32,7 +32,7 @@ public class AuthorizedUserFilter extends HttpFilter {
                     res.sendRedirect("/admin");
                     break;
                 case CLIENT:
-                    res.sendRedirect("/client");
+                    res.sendRedirect("/user");
                     break;
             }
         }

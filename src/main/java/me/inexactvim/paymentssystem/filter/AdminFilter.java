@@ -12,7 +12,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebFilter(urlPatterns = {
-        "/admin/*"
+        "/admin",
+        "/account/unblock"
 })
 public class AdminFilter extends HttpFilter {
 

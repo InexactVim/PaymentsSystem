@@ -9,6 +9,6 @@ public class Account {
 
     private long number;
     private BigDecimal balance;
-    private boolean blocked;
+    private AccountStatus status;
 
 }

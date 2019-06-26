@@ -1,16 +1,20 @@
 package me.inexactvim.paymentssystem.repository;
 
+import me.inexactvim.paymentssystem.exception.DAOException;
 import me.inexactvim.paymentssystem.object.Account;
+import me.inexactvim.paymentssystem.object.AccountStatus;
 
-import java.util.Collection;
+import java.math.BigDecimal;
 import java.util.Optional;
 
 public interface AccountRepository {
 
-    Optional<Account> loadByNumber(long number);
+    Optional<Account> loadAccount(long number) throws DAOException;
 
-    Optional<Account> loadByUserId(long userId);
+    long saveAccount(Account account) throws DAOException;
 
-    Collection<Account> loadAll();
+    void setAccountBalance(Account account, BigDecimal amount) throws DAOException;
+
+    void setAccountStatus(Account account, AccountStatus status) throws DAOException;
 
 }

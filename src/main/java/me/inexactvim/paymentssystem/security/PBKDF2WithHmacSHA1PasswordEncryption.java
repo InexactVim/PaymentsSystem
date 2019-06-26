@@ -24,7 +24,7 @@ public final class PBKDF2WithHmacSHA1PasswordEncryption implements PasswordEncry
     private static final SecureRandom SECURE_RANDOM = new SecureRandom();
 
     @Override
-    public String encrypt(String password) {
+    public synchronized String encrypt(String password) {
         byte[] salt = generateSalt();
         byte[] hash = getHash(password.toCharArray(), salt, ITERATIONS, HASH_BYTES);
 
@@ -53,7 +53,7 @@ public final class PBKDF2WithHmacSHA1PasswordEncryption implements PasswordEncry
     }
 
     @Override
-    public boolean isValid(String target, String encryptedPassword) {
+    public synchronized boolean isValid(String target, String encryptedPassword) {
         String[] arguments = encryptedPassword.split(":");
         int iterations = Integer.parseInt(arguments[0]);
 

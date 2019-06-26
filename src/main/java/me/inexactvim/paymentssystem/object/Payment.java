@@ -12,7 +12,6 @@ public class Payment {
     private long senderAccountNumber;
     private long recipientAccountNumber;
     private BigDecimal amount;
-    private PaymentResult result;
     private String comment;
     private Timestamp timestamp;
 

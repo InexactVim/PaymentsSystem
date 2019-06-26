@@ -1,26 +1,25 @@
 package me.inexactvim.paymentssystem.factory;
 
 import me.inexactvim.paymentssystem.repository.AccountRepository;
-import me.inexactvim.paymentssystem.repository.CreditCardRepository;
-import me.inexactvim.paymentssystem.repository.PaymentRepository;
 import me.inexactvim.paymentssystem.repository.UserRepository;
+import me.inexactvim.paymentssystem.repository.sql.SqlAccountRepository;
+import me.inexactvim.paymentssystem.repository.sql.SqlUserRepository;
 
 public class RepositoryFactory {
 
-    public static AccountRepository getAccountRepository() {
-        return null;
+    private static UserRepository userRepository;
+    private static AccountRepository accountRepository;
+
+    static {
+        userRepository = new SqlUserRepository(SqlDatabaseFactory.getDatabaseManager());
+        accountRepository = new SqlAccountRepository(SqlDatabaseFactory.getDatabaseManager());
     }
 
-    public static CreditCardRepository getcCreditCardRepository() {
-        return null;
+    public static synchronized UserRepository getUserRepository() {
+        return userRepository;
     }
 
-    public static PaymentRepository getPaymentRepository() {
-        return null;
+    public static synchronized AccountRepository getAccountRepository() {
+        return accountRepository;
     }
-
-    public static UserRepository getUserRepository() {
-        return null;
-    }
-
 }

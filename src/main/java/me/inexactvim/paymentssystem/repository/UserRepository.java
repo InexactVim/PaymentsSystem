@@ -1,17 +1,18 @@
 package me.inexactvim.paymentssystem.repository;
 
+import me.inexactvim.paymentssystem.exception.DAOException;
 import me.inexactvim.paymentssystem.object.User;
 
 import java.util.Optional;
 
 public interface UserRepository {
 
-    Optional<User> loadById(long id);
+    Optional<User> loadByEmail(String email) throws DAOException;
 
-    Optional<User> loadByEmail(String email);
+    Optional<User> loadByAccountNumber(long accountNumber) throws DAOException;
 
-    boolean exists(String email);
+    long saveUser(User user) throws DAOException;
 
-    Optional<User> loadByAccountNumber(long accountNumber);
+    void updateUser(User user) throws DAOException;
 
 }
