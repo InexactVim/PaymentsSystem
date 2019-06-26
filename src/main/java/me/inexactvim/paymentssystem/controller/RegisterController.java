@@ -46,38 +46,37 @@ public class RegisterController extends HttpServlet {
             httpSession.setMaxInactiveInterval(15 * 60);
             httpSession.setAttribute("user", user);
             httpSession.setAttribute("account", account);
-            clearAttributes(httpSession);
+            clearAttributes(req);
             resp.sendRedirect("/user");
         } catch (DAOException e) {
-            alertError(httpSession, req, resp, "An error occurred. Please, try again later");
+            alertError(req, resp, "An error occurred. Please, try again later");
         } catch (EmailIsInUsageException e) {
-            alertError(httpSession, req, resp, "This email is already in use");
+            alertError(req, resp, "This email is already in use");
         } catch (AccountNotFoundException e) {
-            alertError(httpSession, req, resp, "Your account is not available. Contact the administrator");
+            alertError(req, resp, "Your account is not available. Contact the administrator");
         }
     }
 
     @Override
     protected void doGet(HttpServletRequest req,
                          HttpServletResponse resp) throws ServletException, IOException {
-        clearAttributes(req.getSession(true));
+        clearAttributes(req);
         req.getRequestDispatcher("/register.jsp").forward(req, resp);
     }
 
-    private void clearAttributes(HttpSession session) {
-        session.removeAttribute("name");
-        session.removeAttribute("surname");
-        session.removeAttribute("email");
-        session.removeAttribute("password");
-        session.removeAttribute("alert");
+    private void clearAttributes(HttpServletRequest request) {
+        request.removeAttribute("name");
+        request.removeAttribute("surname");
+        request.removeAttribute("email");
+        request.removeAttribute("password");
+        request.removeAttribute("alert");
     }
 
-    private void alertError(HttpSession httpSession,
-                            HttpServletRequest httpServletRequest,
+    private void alertError(HttpServletRequest httpServletRequest,
                             HttpServletResponse httpServletResponse,
                             String message) throws ServletException, IOException {
-        clearAttributes(httpSession);
-        httpSession.setAttribute("alert", "<p class=\"alert alert-danger\">" + message + "</p>");
+        clearAttributes(httpServletRequest);
+        httpServletRequest.setAttribute("alert", "<p class=\"alert alert-danger\">" + message + "</p>");
         httpServletRequest.getRequestDispatcher("/register.jsp").forward(httpServletRequest, httpServletResponse);
     }
 }

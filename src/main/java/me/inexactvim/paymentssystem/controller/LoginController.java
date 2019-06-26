@@ -45,36 +45,35 @@ public class LoginController extends HttpServlet {
             httpSession.setMaxInactiveInterval(15 * 60);
             httpSession.setAttribute("account", account);
             httpSession.setAttribute("user", user);
-            clearAttributes(httpSession);
+            clearAttributes(req);
             resp.sendRedirect("/user");
         } catch (DAOException e) {
-            alertError(httpSession, req, resp, "An error occurred. Please, try again later");
+            alertError(req, resp, "An error occurred. Please, try again later");
         } catch (IncorrectCredentialsException e) {
-            alertError(httpSession, req, resp, e.getMessage());
+            alertError(req, resp, e.getMessage());
         } catch (AccountNotFoundException e) {
-            alertError(httpSession, req, resp, "Your account is not available. Contact the administrator");
+            alertError(req, resp, "Your account is not available. Contact the administrator");
         }
     }
 
     @Override
     protected void doGet(HttpServletRequest req,
                          HttpServletResponse resp) throws ServletException, IOException {
-        clearAttributes(req.getSession(true));
+        clearAttributes(req);
         req.getRequestDispatcher("/login.jsp").forward(req, resp);
     }
 
-    private void clearAttributes(HttpSession session) {
-        session.removeAttribute("email");
-        session.removeAttribute("password");
-        session.removeAttribute("alert");
+    private void clearAttributes(HttpServletRequest request) {
+        request.removeAttribute("email");
+        request.removeAttribute("password");
+        request.removeAttribute("alert");
     }
 
-    private void alertError(HttpSession httpSession,
-                            HttpServletRequest httpServletRequest,
+    private void alertError(HttpServletRequest httpServletRequest,
                             HttpServletResponse httpServletResponse,
                             String message) throws ServletException, IOException {
-        clearAttributes(httpSession);
-        httpSession.setAttribute("alert", "<p class=\"alert alert-danger\">" + message + "</p>");
+        clearAttributes(httpServletRequest);
+        httpServletRequest.setAttribute("alert", "<p class=\"alert alert-danger\">" + message + "</p>");
         httpServletRequest.getRequestDispatcher("/login.jsp").forward(httpServletRequest, httpServletResponse);
     }
 

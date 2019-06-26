@@ -32,33 +32,32 @@ public class ResetPasswordController extends HttpServlet {
 
         try {
             userService.resetUserPassword(email);
-            alert(httpSession, req, resp, "success", "A new password was sent to email");
+            alert(req, resp, "success", "A new password was sent to email");
         } catch (DAOException | EmailMessagingException e) {
-            alert(httpSession, req, resp, "danger", "An error occurred. Please, try again later");
+            alert(req, resp, "danger", "An error occurred. Please, try again later");
         } catch (IncorrectCredentialsException e) {
-            alert(httpSession, req, resp, "danger", e.getMessage());
+            alert(req, resp, "danger", e.getMessage());
         }
     }
 
     @Override
     protected void doGet(HttpServletRequest req,
                          HttpServletResponse resp) throws ServletException, IOException {
-        clearAttributes(req.getSession(true));
+        clearAttributes(req);
         req.getRequestDispatcher("/reset_password.jsp").forward(req, resp);
     }
 
-    private void clearAttributes(HttpSession session) {
-        session.removeAttribute("email");
-        session.removeAttribute("alert");
+    private void clearAttributes(HttpServletRequest request) {
+        request.removeAttribute("email");
+        request.removeAttribute("alert");
     }
 
-    private void alert(HttpSession httpSession,
-                       HttpServletRequest httpServletRequest,
+    private void alert(HttpServletRequest httpServletRequest,
                        HttpServletResponse httpServletResponse,
                        String type,
                        String message) throws ServletException, IOException {
-        clearAttributes(httpSession);
-        httpSession.setAttribute("alert", "<p class=\"alert alert-" + type + "\">" + message + "</p>");
+        clearAttributes(httpServletRequest);
+        httpServletRequest.setAttribute("alert", "<p class=\"alert alert-" + type + "\">" + message + "</p>");
         httpServletRequest.getRequestDispatcher("/reset_password.jsp").forward(httpServletRequest, httpServletResponse);
     }
 }
