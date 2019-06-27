@@ -7,7 +7,7 @@ import java.util.Collection;
 
 public interface PaymentRepository {
 
-    Collection<Payment> loadUserPayments(long userId) throws DAOException;
+    Collection<Payment> loadAccountPayments(long accountNumber) throws DAOException;
 
     long savePayment(Payment payment) throws DAOException;
 

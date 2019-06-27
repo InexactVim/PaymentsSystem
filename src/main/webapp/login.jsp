@@ -33,7 +33,7 @@
             <form method="post" action="/login">
                 <div class="form-group">
                     <label for="email">Email address</label>
-                    <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter your email" required>
+                    <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter your email" maxlength="45" required>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>

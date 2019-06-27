@@ -22,7 +22,7 @@ public class SqlAccountRepository implements AccountRepository {
 
     @Override
     public Optional<Account> loadAccount(long number) throws DAOException {
-        return Optional.ofNullable(databaseManager.executeQuery("SELECT * FROM account WHERE number=?", resultSet -> {
+        return Optional.ofNullable(databaseManager.executeQuery("SELECT * FROM accounts WHERE number=?", resultSet -> {
             if (!resultSet.next()) {
                 return null;
             }

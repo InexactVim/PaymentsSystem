@@ -21,10 +21,10 @@ public class PaymentDisplay {
 
         if (payment.getRecipientAccountNumber() == targetAccountNumber) {
             info = String.format(INFO, "From", payment.getSenderAccountNumber());
-            total = String.format(TOTAL, "green", NumberUtil.format(payment.getAmount()));
+            total = String.format(TOTAL, "green", NumberUtil.amountFormat(payment.getAmount()));
         } else {
             info = String.format(INFO, "To", payment.getRecipientAccountNumber());
-            total = String.format(TOTAL, "red", NumberUtil.format(payment.getAmount()));
+            total = String.format(TOTAL, "red", NumberUtil.amountFormat(payment.getAmount()));
         }
     }
 }

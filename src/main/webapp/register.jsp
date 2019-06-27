@@ -20,7 +20,7 @@
 
 <header>
     <nav class="navbar navbar-dark fixed-top bg-color-dark">
-        <a class="navbar-brand text-center" href="login.jsp">
+        <a class="navbar-brand text-center" href="/login">
             <img class="brand-image navbar-element" src="assets/images/logo.png" alt="logo">
             <span class="brand-font navbar-element">&nbspPayments System</span>
         </a>
@@ -34,15 +34,15 @@
             <form method="post" action="/register">
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" class="form-control" name="name" id="name" placeholder="Enter your name" required>
+                    <input type="text" class="form-control" name="name" id="name" placeholder="Enter your name" maxlength="45" required>
                 </div>
                 <div class="form-group">
                     <label for="surname">Surname</label>
-                    <input type="text" class="form-control" name="surname" id="surname" placeholder="Enter your surname" required>
+                    <input type="text" class="form-control" name="surname" id="surname" placeholder="Enter your surname" maxlength="45" required>
                 </div>
                 <div class="form-group">
                     <label for="email">Email address</label>
-                    <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Enter your email" required>
+                    <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Enter your email" maxlength="45" required>
                     <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else</small>
                 </div>
                 <div class="form-group">

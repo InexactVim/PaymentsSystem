@@ -13,7 +13,11 @@ public class NumberUtil {
         DECIMAL_FORMAT.setRoundingMode(RoundingMode.FLOOR);
     }
 
-    public static String format(BigDecimal bigDecimal) {
+    public static String amountFormat(BigDecimal bigDecimal) {
         return (bigDecimal.compareTo(BigDecimal.ZERO) > 0 ? "+" : "") + DECIMAL_FORMAT.format(bigDecimal);
+    }
+
+    public static String accountNumberFormat(long accountNumber) {
+        return String.format("%011d", accountNumber);
     }
 }

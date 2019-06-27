@@ -2,10 +2,11 @@ package me.inexactvim.paymentssystem.controller;
 
 import me.inexactvim.paymentssystem.exception.DAOException;
 import me.inexactvim.paymentssystem.factory.ServiceFactory;
+import me.inexactvim.paymentssystem.object.Account;
 import me.inexactvim.paymentssystem.object.Payment;
-import me.inexactvim.paymentssystem.object.User;
 import me.inexactvim.paymentssystem.service.PaymentService;
 import me.inexactvim.paymentssystem.service.UserService;
+import me.inexactvim.paymentssystem.util.NumberUtil;
 import me.inexactvim.paymentssystem.util.PaymentDisplay;
 
 import javax.servlet.ServletException;
@@ -28,25 +29,20 @@ public class UserController extends HttpServlet {
     @Override
     public void init() {
         userService = ServiceFactory.getUserService();
-
+        paymentService = ServiceFactory.getPaymentService();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(true);
         clearAttributes(req);
-        User user = (User) session.getAttribute("user");
-
-        if (user == null) {
-            req.setAttribute("payments", Collections.emptyList());
-            alertError(req, resp, "An error occurred while loading payments history. Please, try again later");
-            return;
-        }
-
+        Account account = (Account) session.getAttribute("account");
+        session.setAttribute("accountBalance", NumberUtil.amountFormat(account.getBalance()));
+        session.setAttribute("accountNumber", NumberUtil.accountNumberFormat(account.getNumber()));
         Collection<Payment> payments;
 
         try {
-            payments = paymentService.getUserPayments(user.getId());
+            payments = paymentService.getAccountPayments(account.getNumber());
         } catch (DAOException e) {
             req.setAttribute("payments", Collections.emptyList());
             alertError(req, resp, "An error occurred while loading payments history. Please, try again later");
@@ -54,7 +50,7 @@ public class UserController extends HttpServlet {
         }
 
         req.setAttribute("payments", payments.stream()
-                .map(payment -> new PaymentDisplay(user.getAccountNumber(), payment))
+                .map(payment -> new PaymentDisplay(account.getNumber(), payment))
                 .collect(Collectors.toList()));
         req.getRequestDispatcher("/user.jsp").forward(req, resp);
     }

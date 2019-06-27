@@ -1,4 +1,4 @@
-package me.inexactvim.paymentssystem.controller.admin;
+package me.inexactvim.paymentssystem.controller.account;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/admin/main")
-public class MainController extends HttpServlet {
+@WebServlet("/account/refill")
+public class RefillController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

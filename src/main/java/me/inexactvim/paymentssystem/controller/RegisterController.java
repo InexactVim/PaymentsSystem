@@ -49,6 +49,7 @@ public class RegisterController extends HttpServlet {
             clearAttributes(req);
             resp.sendRedirect("/user");
         } catch (DAOException e) {
+            e.printStackTrace();
             alertError(req, resp, "An error occurred. Please, try again later");
         } catch (EmailIsInUsageException e) {
             alertError(req, resp, "This email is already in use");

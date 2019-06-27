@@ -13,7 +13,7 @@ import java.io.IOException;
 
 @WebFilter(urlPatterns = {
         "/admin",
-        "/account/unblock"
+        "/admin/*"
 })
 public class AdminFilter extends HttpFilter {
 

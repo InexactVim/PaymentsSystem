@@ -1,4 +1,4 @@
-package me.inexactvim.paymentssystem.controller.card;
+package me.inexactvim.paymentssystem.controller.cards;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/card/add")
+@WebServlet("/cards/add")
 public class AddController extends HttpServlet {
 
     @Override

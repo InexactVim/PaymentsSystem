@@ -58,8 +58,8 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="login-form">
-        <span class="form-text text-danger">${errorText}</span>
-        <form method="post">
+        ${alert}
+        <form method="post" action="/send_payment">
           <div class="form-group">
             <label for="account_number">Account number</label>
             <input name="account_number" type="text" class="form-control" id="account_number" placeholder="Enter account number" minlength="11" maxlength="11" onkeypress="return isNumber(event);" onpaste="return false;" required>
@@ -67,6 +67,10 @@
           <div class="form-group">
             <label for="payment_amount">Payment amount</label>
             <input name="payment_amount" type="text" class="form-control" id="payment_amount" placeholder="Enter payment amount" onkeypress="return checkSumField(event);" onpaste="return false;" required>
+          </div>
+          <div class="form-group">
+            <label for="comment">Comment</label>
+            <input name="comment" type="text" class="form-control" id="comment" aria-describedby="commentHelp" placeholder="Enter payment comment" required>
           </div>
           <div class="form-group">
             <button type="submit" class="btn btn-success btn-block shadow rounded">Send payment</button>

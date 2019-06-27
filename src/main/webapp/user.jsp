@@ -26,7 +26,7 @@
 
 <header>
     <nav class="navbar navbar-expand-sm navbar-dark fixed-top bg-color-dark">
-        <a class="navbar-brand text-center" href="user.jsp">
+        <a class="navbar-brand text-center" href="/user">
             <img class="brand-image navbar-element" src="assets/images/logo.png" alt="logo">
             <span class="brand-font navbar-element">&nbspPayments System</span>
         </a>
@@ -75,9 +75,9 @@
             <h2><c:out value="${user.name}"/> <c:out value="${user.surname}"/></h2>
             <div class="text-muted"><c:out value="${user.email}"/></div>
             <p>
-            <h3>Balance: <span class="color-orange"><c:out value="${account.balance}"/>$</span></h3>
+            <h3>Balance: <span class="color-orange">${accountBalance}$</span></h3>
             <p>
-            <h3>Account number: <span class="color-blue"><c:out value="${account.number}"/></span></h3>
+            <h3>Account number: <span class="color-blue">${accountNumber}</span></h3>
         </div>
         <div class="col col-md-8 text-center">
             <p>

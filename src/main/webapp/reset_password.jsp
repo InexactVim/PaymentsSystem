@@ -20,7 +20,7 @@
 
 <header>
     <nav class="navbar navbar-dark fixed-top bg-color-dark">
-        <a class="navbar-brand text-center" href="login.jsp">
+        <a class="navbar-brand text-center" href="/login">
             <img class="brand-image navbar-element" src="assets/images/logo.png" alt="logo">
             <span class="brand-font navbar-element">&nbspPayments System</span>
         </a>
@@ -34,12 +34,12 @@
             <form method="post" action="/reset_password">
                 <div class="form-group">
                     <label for="email">Email address</label>
-                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter your email" required>
+                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter your email" maxlength="45" required>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-block font-weight-bold shadow rounded bg-color-light-green">Reset password</button>
                 </div>
-                <a role="button" class="btn btn-block nav-back-btn shadow rounded bg-color-orange" href="login.jsp">Cancel</a>
+                <a role="button" class="btn btn-block nav-back-btn shadow rounded bg-color-orange" href="/login">Cancel</a>
             </form>
         </div>
     </div>
