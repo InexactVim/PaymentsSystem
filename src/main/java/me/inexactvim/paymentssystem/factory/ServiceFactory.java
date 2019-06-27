@@ -1,14 +1,8 @@
 package me.inexactvim.paymentssystem.factory;
 
 import me.inexactvim.paymentssystem.security.PBKDF2WithHmacSHA1PasswordEncryption;
-import me.inexactvim.paymentssystem.service.AccountService;
-import me.inexactvim.paymentssystem.service.EmailService;
-import me.inexactvim.paymentssystem.service.PaymentService;
-import me.inexactvim.paymentssystem.service.UserService;
-import me.inexactvim.paymentssystem.service.impl.AccountServiceImpl;
-import me.inexactvim.paymentssystem.service.impl.EmailServiceImpl;
-import me.inexactvim.paymentssystem.service.impl.PaymentServiceImpl;
-import me.inexactvim.paymentssystem.service.impl.UserServiceImpl;
+import me.inexactvim.paymentssystem.service.*;
+import me.inexactvim.paymentssystem.service.impl.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,6 +14,7 @@ public class ServiceFactory {
     private static EmailService emailService;
     private static AccountService accountService;
     private static PaymentService paymentService;
+    private static CreditCardService creditCardService;
 
     static {
         userService = new UserServiceImpl(RepositoryFactory.getUserRepository(), PBKDF2WithHmacSHA1PasswordEncryption.getInstance());
@@ -33,7 +28,8 @@ public class ServiceFactory {
         emailService = new EmailServiceImpl(emailProperties);
 
         accountService = new AccountServiceImpl(RepositoryFactory.getAccountRepository());
-        paymentService = new PaymentServiceImpl(RepositoryFactory.getPaymentRepository());
+        paymentService = new PaymentServiceImpl(RepositoryFactory.getPaymentRepository(), accountService);
+        creditCardService = new CreditCardServiceImpl(RepositoryFactory.getCreditCardRepository());
     }
 
     public static synchronized UserService getUserService() {
@@ -50,5 +46,9 @@ public class ServiceFactory {
 
     public static synchronized PaymentService getPaymentService() {
         return paymentService;
+    }
+
+    public static synchronized CreditCardService getCreditCardService() {
+        return creditCardService;
     }
 }

@@ -1,9 +1,12 @@
-package me.inexactvim.paymentssystem.util;
+package me.inexactvim.paymentssystem.util.display;
 
+import lombok.Getter;
 import me.inexactvim.paymentssystem.object.Payment;
+import me.inexactvim.paymentssystem.util.NumberUtil;
 
 import java.text.SimpleDateFormat;
 
+@Getter
 public class PaymentDisplay {
 
     private final static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy hh:mm");

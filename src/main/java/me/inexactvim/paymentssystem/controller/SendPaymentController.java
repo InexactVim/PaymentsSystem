@@ -35,21 +35,26 @@ public class SendPaymentController extends HttpServlet {
 
         long recipientAccountNumber;
         try {
-            recipientAccountNumber = (long) req.getAttribute("account_number");
+            recipientAccountNumber = Long.parseLong(req.getParameter("account_number"));
         } catch (ClassCastException e) {
             alert(req, resp, "danger", "Please, enter the correct account number in the \"Account number\" field");
             return;
         }
 
+        if (recipientAccountNumber == account.getNumber()) {
+            alert(req, resp, "danger", "You can not send payments to your account");
+            return;
+        }
+
         BigDecimal amount;
         try {
-            amount = new BigDecimal((String) req.getAttribute("payment_amount"));
+            amount = new BigDecimal(req.getParameter("payment_amount"));
         } catch (NumberFormatException e) {
             alert(req, resp, "danger", "Please, enter the correct number in the \"Payment amount\" field");
             return;
         }
 
-        String comment = (String) req.getAttribute("comment");
+        String comment = req.getParameter("comment");
 
         try {
             paymentService.createPayment(account.getNumber(), recipientAccountNumber, amount, comment);
@@ -73,9 +78,9 @@ public class SendPaymentController extends HttpServlet {
     }
 
     private void clearAttributes(HttpServletRequest request) {
-        request.removeAttribute("account_number");
+        /*request.removeAttribute("account_number");
         request.removeAttribute("payment_amount");
-        request.removeAttribute("comment");
+        request.removeAttribute("comment");*/
         request.removeAttribute("alert");
     }
 

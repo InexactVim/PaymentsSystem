@@ -20,4 +20,8 @@ public class NumberUtil {
     public static String accountNumberFormat(long accountNumber) {
         return String.format("%011d", accountNumber);
     }
+
+    public static String creditCardNumberFormat(long cardNumber) {
+        return String.valueOf(cardNumber).replaceAll(".{4}(?!$)", "$0 ");
+    }
 }

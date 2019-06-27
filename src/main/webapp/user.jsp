@@ -57,7 +57,7 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="log-out-btn" href="/login">Log&nbspout</a>
+                    <a class="nav-link" id="log-out-btn" href="/logout">Log&nbspout</a>
                 </li>
             </ul>
         </div>

@@ -5,8 +5,10 @@ import me.inexactvim.paymentssystem.object.Payment;
 import me.inexactvim.paymentssystem.repository.PaymentRepository;
 import me.inexactvim.paymentssystem.sql.SqlDatabaseManager;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -52,6 +54,21 @@ public class SqlPaymentRepository implements PaymentRepository {
 
     @Override
     public long savePayment(Payment payment) throws DAOException {
-        return 0;
+        return databaseManager.customExecute(connection -> {
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO payments (sender_account_number, recipient_account_number, amount, comment, time) VALUES (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+            statement.setObject(1, payment.getSenderAccountNumber());
+            statement.setObject(2, payment.getRecipientAccountNumber());
+            statement.setObject(3, payment.getAmount());
+            statement.setObject(4, payment.getComment());
+            statement.setObject(5, payment.getTimestamp());
+            statement.executeUpdate();
+            ResultSet resultSet = statement.getGeneratedKeys();
+
+            if (resultSet.next()) {
+                return resultSet.getLong(1);
+            }
+
+            throw new DAOException();
+        });
     }
 }

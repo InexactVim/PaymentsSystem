@@ -89,7 +89,5 @@ public class UserServiceImpl implements UserService {
             userRepository.updateUser(user);
             throw new EmailMessagingException(e);
         }
-
-        user.setPassword(passwordEncryption.encrypt(newPassword));
     }
 }

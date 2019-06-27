@@ -17,7 +17,7 @@
 
   <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-color-dark">
-      <a class="navbar-brand text-center" href="user.jsp">
+      <a class="navbar-brand text-center" href="/user">
         <img class="brand-image navbar-element" src="assets/images/logo.png" alt="logo">
         <span class="brand-font navbar-element">&nbspPayments System</span>
       </a>
@@ -27,7 +27,7 @@
       <div class="collapse navbar-collapse" id="navbarDropdown">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="user.jsp">Home</a>
+            <a class="nav-link" href="/user">Home</a>
           </li>
           <li class="nav-item active">
             <span class="nav-link">Send&nbsppayment</span>
@@ -35,20 +35,20 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuCards" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cards</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuCards">
-              <a class="dropdown-item" href="cards/list.html">Show cards</a>
-              <a class="dropdown-item" href="cards/add.html">Add card</a>
-              <a class="dropdown-item" href="cards/remove.html">Remove card</a>
+              <a class="dropdown-item" href="/cards/list">Show cards</a>
+              <a class="dropdown-item" href="/cards/add">Add card</a>
+              <a class="dropdown-item" href="/cards/remove">Remove card</a>
             </div>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuAccount" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuAccount">
-              <a class="dropdown-item" href="account/refill.html">Refill account</a>
-              <a class="dropdown-item" href="account/block.html">Block account</a>
+              <a class="dropdown-item" href="/account/refill">Refill account</a>
+              <a class="dropdown-item" href="/account/block">Block account</a>
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" id="log-out-btn" href="login.jsp">Log&nbspout</a>
+            <a class="nav-link" id="log-out-btn" href="/logout">Log&nbspout</a>
           </li>
         </ul>
       </div>

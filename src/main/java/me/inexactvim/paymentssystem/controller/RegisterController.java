@@ -50,11 +50,11 @@ public class RegisterController extends HttpServlet {
             resp.sendRedirect("/user");
         } catch (DAOException e) {
             e.printStackTrace();
-            alertError(req, resp, "An error occurred. Please, try again later");
+            alert(req, resp, "An error occurred. Please, try again later");
         } catch (EmailIsInUsageException e) {
-            alertError(req, resp, "This email is already in use");
+            alert(req, resp, "This email is already in use");
         } catch (AccountNotFoundException e) {
-            alertError(req, resp, "Your account is not available. Contact the administrator");
+            alert(req, resp, "Your account is not available. Contact the administrator");
         }
     }
 
@@ -66,16 +66,16 @@ public class RegisterController extends HttpServlet {
     }
 
     private void clearAttributes(HttpServletRequest request) {
-        request.removeAttribute("name");
+        /*request.removeAttribute("name");
         request.removeAttribute("surname");
         request.removeAttribute("email");
-        request.removeAttribute("password");
+        request.removeAttribute("password");*/
         request.removeAttribute("alert");
     }
 
-    private void alertError(HttpServletRequest httpServletRequest,
-                            HttpServletResponse httpServletResponse,
-                            String message) throws ServletException, IOException {
+    private void alert(HttpServletRequest httpServletRequest,
+                       HttpServletResponse httpServletResponse,
+                       String message) throws ServletException, IOException {
         clearAttributes(httpServletRequest);
         httpServletRequest.setAttribute("alert", "<p class=\"alert alert-danger\">" + message + "</p>");
         httpServletRequest.getRequestDispatcher("/register.jsp").forward(httpServletRequest, httpServletResponse);

@@ -5,9 +5,8 @@ import me.inexactvim.paymentssystem.factory.ServiceFactory;
 import me.inexactvim.paymentssystem.object.Account;
 import me.inexactvim.paymentssystem.object.Payment;
 import me.inexactvim.paymentssystem.service.PaymentService;
-import me.inexactvim.paymentssystem.service.UserService;
 import me.inexactvim.paymentssystem.util.NumberUtil;
-import me.inexactvim.paymentssystem.util.PaymentDisplay;
+import me.inexactvim.paymentssystem.util.display.PaymentDisplay;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,12 +22,10 @@ import java.util.stream.Collectors;
 @WebServlet("/user")
 public class UserController extends HttpServlet {
 
-    private UserService userService;
     private PaymentService paymentService;
 
     @Override
     public void init() {
-        userService = ServiceFactory.getUserService();
         paymentService = ServiceFactory.getPaymentService();
     }
 
@@ -37,15 +34,15 @@ public class UserController extends HttpServlet {
         HttpSession session = req.getSession(true);
         clearAttributes(req);
         Account account = (Account) session.getAttribute("account");
-        session.setAttribute("accountBalance", NumberUtil.amountFormat(account.getBalance()));
-        session.setAttribute("accountNumber", NumberUtil.accountNumberFormat(account.getNumber()));
+        req.setAttribute("accountBalance", NumberUtil.amountFormat(account.getBalance()));
+        req.setAttribute("accountNumber", NumberUtil.accountNumberFormat(account.getNumber()));
         Collection<Payment> payments;
 
         try {
             payments = paymentService.getAccountPayments(account.getNumber());
         } catch (DAOException e) {
             req.setAttribute("payments", Collections.emptyList());
-            alertError(req, resp, "An error occurred while loading payments history. Please, try again later");
+            alert(req, resp, "An error occurred while loading payments history. Please, try again later");
             return;
         }
 
@@ -57,11 +54,12 @@ public class UserController extends HttpServlet {
 
     private void clearAttributes(HttpServletRequest request) {
         request.removeAttribute("alert");
+        request.removeAttribute("payments");
     }
 
-    private void alertError(HttpServletRequest httpServletRequest,
-                            HttpServletResponse httpServletResponse,
-                            String message) throws ServletException, IOException {
+    private void alert(HttpServletRequest httpServletRequest,
+                       HttpServletResponse httpServletResponse,
+                       String message) throws ServletException, IOException {
         clearAttributes(httpServletRequest);
         httpServletRequest.setAttribute("alert", "<p class=\"alert alert-danger\">" + message + "</p>");
         httpServletRequest.getRequestDispatcher("/user.jsp").forward(httpServletRequest, httpServletResponse);

@@ -34,7 +34,7 @@
             <form method="post" action="/reset_password">
                 <div class="form-group">
                     <label for="email">Email address</label>
-                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter your email" maxlength="45" required>
+                    <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter your email" maxlength="45" required>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-block font-weight-bold shadow rounded bg-color-light-green">Reset password</button>
