@@ -1,95 +1,64 @@
 package me.inexactvim.paymentssystem.controller.cards;
 
-import me.inexactvim.paymentssystem.exception.CardIsExpiredException;
-import me.inexactvim.paymentssystem.exception.CreditCardAlreadyAddedException;
+import me.inexactvim.paymentssystem.controller.AbstractController;
+import me.inexactvim.paymentssystem.exception.card.CardIsExpiredException;
+import me.inexactvim.paymentssystem.exception.card.CardAlreadyAddedException;
 import me.inexactvim.paymentssystem.exception.DAOException;
-import me.inexactvim.paymentssystem.factory.ServiceFactory;
 import me.inexactvim.paymentssystem.object.Account;
-import me.inexactvim.paymentssystem.service.CreditCardService;
+import me.inexactvim.paymentssystem.util.DateUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 @WebServlet("/cards/add")
-public class AddController extends HttpServlet {
-
-    private static SimpleDateFormat expirationDateFormat = new SimpleDateFormat("MM/dd/yyyy");
-
-    private CreditCardService creditCardService;
+public class AddController extends AbstractController {
 
     @Override
-    public void init() {
-        creditCardService = ServiceFactory.getCreditCardService();
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req,
-                          HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession httpSession = req.getSession(true);
-        Account account = (Account) httpSession.getAttribute("account");
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(true);
+        Account account = getSessionAttribute(session, "account");
 
         long cardNumber;
         try {
-            cardNumber = Long.parseLong(req.getParameter("card_number"));
+            cardNumber = Long.parseLong(request.getParameter("card_number"));
         } catch (NumberFormatException e) {
-            alert(req, resp, "danger", "Please, enter the correct card number in the \"Card number\" field");
+            alertError("Please, enter the correct card number in the \"Card number\" field", request, response);
             return;
         }
 
         short code;
         try {
-            code = Short.parseShort(req.getParameter("code"));
+            code = Short.parseShort(request.getParameter("code"));
         } catch (NumberFormatException e) {
-            alert(req, resp, "danger", "Please, enter the correct card code in the \"Code\" field");
+            alertError("Please, enter the correct card code in the \"Code\" field", request, response);
             return;
         }
 
         Date expirationDate;
         try {
-            expirationDate = new Date(expirationDateFormat.parse(req.getParameter("expiration_date")).getTime());
+            expirationDate = DateUtil.parse(request.getParameter("expiration_date"));
         } catch (ParseException e) {
-            alert(req, resp, "danger", "Please, enter the correct expiration date in the \"Expiration date\" field");
+            alertError("Please, enter the correct expiration date in the \"Expiration date\" field", request, response);
             return;
         }
 
         try {
             creditCardService.addCreditCard(account.getNumber(), cardNumber, code, expirationDate);
-            alert(req, resp, "success", "Credit card added");
+            alertSuccess("Credit card added", request, response);
         } catch (DAOException e) {
             e.printStackTrace();
-            alert(req, resp, "danger", "An error occurred. Please, try again later");
-        } catch (CreditCardAlreadyAddedException e) {
-            alert(req, resp, "danger", "This card is already added");
+            alertError("An error occurred. Please, try again later", request, response);
+        } catch (CardAlreadyAddedException e) {
+            alertError("This card is already added", request, response);
         } catch (CardIsExpiredException e) {
-            alert(req, resp, "danger", "Can not add a new credit card. This card is expired");
+            alertError("Can not add a new credit card. This card is expired", request, response);
         }
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest req,
-                         HttpServletResponse resp) throws ServletException, IOException {
-        clearAttributes(req);
-        req.getRequestDispatcher("/cards/add.jsp").forward(req, resp);
-    }
-
-    private void clearAttributes(HttpServletRequest request) {
-        request.removeAttribute("alert");
-    }
-
-    private void alert(HttpServletRequest httpServletRequest,
-                            HttpServletResponse httpServletResponse,
-                            String type,
-                            String message) throws ServletException, IOException {
-        clearAttributes(httpServletRequest);
-        httpServletRequest.setAttribute("alert", "<p class=\"alert alert-" + type + "\">" + message + "</p>");
-        httpServletRequest.getRequestDispatcher("/cards/add.jsp").forward(httpServletRequest, httpServletResponse);
     }
 }

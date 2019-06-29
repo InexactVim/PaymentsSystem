@@ -1,5 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--@elvariable id="alert" type="java.lang.String"--%>
-<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" %>
 
 <!doctype html>
 <html lang="en">
@@ -11,7 +12,7 @@
     <link rel="stylesheet" href="assets/fonts/didact-gothic.css">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/images/logo.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/logo.png"/>
 
     <title>Reset password | Payments system</title>
 </head>
@@ -29,19 +30,22 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="reset-password-form">
-            ${alert}
-            <form method="post" action="/reset_password">
-                <div class="form-group">
-                    <label for="email">Email address</label>
-                    <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter your email" maxlength="45" required>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-block font-weight-bold shadow rounded bg-color-light-green">Reset password</button>
-                </div>
-                <a role="button" class="btn btn-block nav-back-btn shadow rounded bg-color-orange" href="/login">Cancel</a>
-            </form>
-        </div>
+        <form class="base-form" method="post" action="/reset_password">
+            <c:if test="${alert != null}">
+                <div class="alert alert-${alert.type}">${alert.message}</div>
+            </c:if>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp"
+                       placeholder="Enter your email" maxlength="45" required>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-block font-weight-bold shadow rounded bg-color-light-green">
+                    Reset password
+                </button>
+            </div>
+            <a role="button" class="btn btn-block nav-back-btn shadow rounded bg-color-orange" href="/login">Cancel</a>
+        </form>
     </div>
 </div>
 

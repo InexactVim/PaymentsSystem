@@ -1,8 +1,8 @@
 package me.inexactvim.paymentssystem.service.impl;
 
-import me.inexactvim.paymentssystem.exception.CardIsExpiredException;
-import me.inexactvim.paymentssystem.exception.CreditCardAlreadyAddedException;
-import me.inexactvim.paymentssystem.exception.CreditCardNotFoundException;
+import me.inexactvim.paymentssystem.exception.card.CardIsExpiredException;
+import me.inexactvim.paymentssystem.exception.card.CardAlreadyAddedException;
+import me.inexactvim.paymentssystem.exception.card.CardNotFoundException;
 import me.inexactvim.paymentssystem.exception.DAOException;
 import me.inexactvim.paymentssystem.object.CreditCard;
 import me.inexactvim.paymentssystem.repository.CreditCardRepository;
@@ -25,13 +25,13 @@ public class CreditCardServiceImpl implements CreditCardService {
     }
 
     @Override
-    public void addCreditCard(long accountNumber, long creditCardNumber, short code, Date expirationDate) throws DAOException, CreditCardAlreadyAddedException, CardIsExpiredException {
+    public void addCreditCard(long accountNumber, long creditCardNumber, short code, Date expirationDate) throws DAOException, CardAlreadyAddedException, CardIsExpiredException {
         if (expirationDate.before(new Date(System.currentTimeMillis()))) {
             throw new CardIsExpiredException();
         }
 
         if (creditCardRepository.exists(accountNumber, creditCardNumber)) {
-            throw new CreditCardAlreadyAddedException();
+            throw new CardAlreadyAddedException();
         }
 
         CreditCard creditCard = new CreditCard();
@@ -44,9 +44,9 @@ public class CreditCardServiceImpl implements CreditCardService {
     }
 
     @Override
-    public void removeCreditCard(long accountNumber, long creditCardNumber) throws DAOException, CreditCardNotFoundException {
+    public void removeCreditCard(long accountNumber, long creditCardNumber) throws DAOException, CardNotFoundException {
         if (creditCardRepository.removeCreditCard(accountNumber, creditCardNumber) == 0) {
-            throw new CreditCardNotFoundException();
+            throw new CardNotFoundException();
         }
     }
 }

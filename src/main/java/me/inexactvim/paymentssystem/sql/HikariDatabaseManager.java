@@ -3,7 +3,6 @@ package me.inexactvim.paymentssystem.sql;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import me.inexactvim.paymentssystem.exception.DAOException;
-import me.inexactvim.paymentssystem.util.function.ThrowableConsumer;
 import me.inexactvim.paymentssystem.util.function.ThrowableFunction;
 
 import java.sql.Connection;
@@ -22,11 +21,6 @@ public class HikariDatabaseManager implements SqlDatabaseManager {
     }
 
     @Override
-    public boolean isConnected() {
-        return dataSource != null && dataSource.isRunning();
-    }
-
-    @Override
     public int executeUpdate(String query, Object... params) throws DAOException {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
@@ -38,22 +32,6 @@ public class HikariDatabaseManager implements SqlDatabaseManager {
 
             return statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException(e);
-        }
-    }
-
-    @Override
-    public void executeQuery(String query, ThrowableConsumer<ResultSet> resultSetConsumer, Object... params) throws DAOException {
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
-            if (params.length > 0) {
-                for (int i = 1; i <= params.length; i++) {
-                    statement.setObject(i, params[i - 1]);
-                }
-            }
-
-            resultSetConsumer.accept(statement.executeQuery());
-        } catch (Exception e) {
             throw new DAOException(e);
         }
     }

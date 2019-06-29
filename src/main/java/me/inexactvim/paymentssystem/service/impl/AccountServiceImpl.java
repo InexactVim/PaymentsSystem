@@ -1,15 +1,14 @@
 package me.inexactvim.paymentssystem.service.impl;
 
-import me.inexactvim.paymentssystem.exception.AccountNotFoundException;
 import me.inexactvim.paymentssystem.exception.DAOException;
-import me.inexactvim.paymentssystem.exception.NegativeBalanceException;
+import me.inexactvim.paymentssystem.exception.account.AccountNotFoundException;
+import me.inexactvim.paymentssystem.exception.account.NegativeBalanceException;
 import me.inexactvim.paymentssystem.object.Account;
 import me.inexactvim.paymentssystem.object.AccountStatus;
 import me.inexactvim.paymentssystem.repository.AccountRepository;
 import me.inexactvim.paymentssystem.service.AccountService;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
 public class AccountServiceImpl implements AccountService {
 
@@ -21,13 +20,8 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account getAccount(long number) throws DAOException, AccountNotFoundException {
-        Optional<Account> accountOptional = accountRepository.loadAccount(number);
-
-        if (!accountOptional.isPresent()) {
-            throw new AccountNotFoundException();
-        }
-
-        return accountOptional.get();
+        return accountRepository.loadAccount(number)
+                .orElseThrow(AccountNotFoundException::new);
     }
 
     @Override

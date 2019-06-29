@@ -1,16 +1,13 @@
 package me.inexactvim.paymentssystem.controller;
 
-import me.inexactvim.paymentssystem.exception.AccountBlockedException;
-import me.inexactvim.paymentssystem.exception.AccountNotFoundException;
+import me.inexactvim.paymentssystem.exception.account.AccountBlockedException;
+import me.inexactvim.paymentssystem.exception.account.AccountNotFoundException;
 import me.inexactvim.paymentssystem.exception.DAOException;
-import me.inexactvim.paymentssystem.exception.NegativeBalanceException;
-import me.inexactvim.paymentssystem.factory.ServiceFactory;
+import me.inexactvim.paymentssystem.exception.account.NegativeBalanceException;
 import me.inexactvim.paymentssystem.object.Account;
-import me.inexactvim.paymentssystem.service.PaymentService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -18,79 +15,48 @@ import java.io.IOException;
 import java.math.BigDecimal;
 
 @WebServlet("/send_payment")
-public class SendPaymentController extends HttpServlet {
-
-    private PaymentService paymentService;
+public class SendPaymentController extends AbstractController {
 
     @Override
-    public void init() {
-        paymentService = ServiceFactory.getPaymentService();
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req,
-                          HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession httpSession = req.getSession(true);
-        Account account = (Account) httpSession.getAttribute("account");
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(true);
+        Account account = getSessionAttribute(session, "account");
 
         long recipientAccountNumber;
         try {
-            recipientAccountNumber = Long.parseLong(req.getParameter("account_number"));
+            recipientAccountNumber = Long.parseLong(request.getParameter("account_number"));
         } catch (ClassCastException e) {
-            alert(req, resp, "danger", "Please, enter the correct account number in the \"Account number\" field");
+            alertError("Please, enter the correct account number in the \"Account number\" field", request, response);
             return;
         }
 
         if (recipientAccountNumber == account.getNumber()) {
-            alert(req, resp, "danger", "You can not send payments to your account");
+            alertError("You can not send payments to your account", request, response);
             return;
         }
 
         BigDecimal amount;
         try {
-            amount = new BigDecimal(req.getParameter("payment_amount"));
+            amount = new BigDecimal(request.getParameter("payment_amount"));
         } catch (NumberFormatException e) {
-            alert(req, resp, "danger", "Please, enter the correct number in the \"Payment amount\" field");
+            alertError("Please, enter the correct number in the \"Payment amount\" field", request, response);
             return;
         }
 
-        String comment = req.getParameter("comment");
+        String comment = request.getParameter("comment");
 
         try {
             paymentService.createPayment(account.getNumber(), recipientAccountNumber, amount, comment);
-            alert(req, resp, "success", "Payment successfully completed");
+            alertSuccess("Payment successfully completed", request, response);
         } catch (DAOException e) {
-            alert(req, resp, "danger", "An error occurred. Please, try again later");
+            alertError("An error occurred. Please, try again later", request, response);
         } catch (AccountNotFoundException e) {
-            alert(req, resp, "danger", "Account not found");
+            alertError("Account not found", request, response);
         } catch (AccountBlockedException e) {
-            alert(req, resp, "danger", e.getMessage());
+            alertError(e.getMessage(), request, response);
         } catch (NegativeBalanceException e) {
-            alert(req, resp, "danger", "You do not have enough money to make a transfer");
+            alertError("You do not have enough money to make a transfer", request, response);
         }
     }
-
-    @Override
-    protected void doGet(HttpServletRequest req,
-                         HttpServletResponse resp) throws ServletException, IOException {
-        clearAttributes(req);
-        req.getRequestDispatcher("/send_payment.jsp").forward(req, resp);
-    }
-
-    private void clearAttributes(HttpServletRequest request) {
-        /*request.removeAttribute("account_number");
-        request.removeAttribute("payment_amount");
-        request.removeAttribute("comment");*/
-        request.removeAttribute("alert");
-    }
-
-    private void alert(HttpServletRequest httpServletRequest,
-                       HttpServletResponse httpServletResponse,
-                       String type,
-                       String message) throws ServletException, IOException {
-        clearAttributes(httpServletRequest);
-        httpServletRequest.setAttribute("alert", "<p class=\"alert alert-" + type + "\">" + message + "</p>");
-        httpServletRequest.getRequestDispatcher("/send_payment.jsp").forward(httpServletRequest, httpServletResponse);
-    }
-
 }

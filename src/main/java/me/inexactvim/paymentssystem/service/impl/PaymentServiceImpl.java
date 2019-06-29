@@ -1,9 +1,9 @@
 package me.inexactvim.paymentssystem.service.impl;
 
-import me.inexactvim.paymentssystem.exception.AccountBlockedException;
-import me.inexactvim.paymentssystem.exception.AccountNotFoundException;
+import me.inexactvim.paymentssystem.exception.account.AccountBlockedException;
+import me.inexactvim.paymentssystem.exception.account.AccountNotFoundException;
 import me.inexactvim.paymentssystem.exception.DAOException;
-import me.inexactvim.paymentssystem.exception.NegativeBalanceException;
+import me.inexactvim.paymentssystem.exception.account.NegativeBalanceException;
 import me.inexactvim.paymentssystem.factory.ServiceFactory;
 import me.inexactvim.paymentssystem.object.Account;
 import me.inexactvim.paymentssystem.object.AccountStatus;

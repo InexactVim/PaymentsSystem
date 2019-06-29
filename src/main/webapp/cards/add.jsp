@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
 
@@ -22,7 +23,8 @@
             <img class="brand-image navbar-element" src="../assets/images/logo.png" alt="logo">
             <span class="brand-font navbar-element">&nbspPayments System</span>
         </a>
-        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarDropdown" aria-controls="navbarDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarDropdown"
+                aria-controls="navbarDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarDropdown">
@@ -34,7 +36,8 @@
                     <a class="nav-link" href="/send_payment">Send&nbsppayment</a>
                 </li>
                 <li class="nav-item dropdown active">
-                    <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuCards" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cards</a>
+                    <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuCards" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cards</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuCards">
                         <a class="dropdown-item" href="/cards/list">Cards list</a>
                         <span class="dropdown-item active">Add card</span>
@@ -42,7 +45,8 @@
                     </div>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuAccount" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
+                    <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuAccount" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuAccount">
                         <a class="dropdown-item" href="/account/refill">Refill account</a>
                         <a class="dropdown-item" href="/account/block">Block account</a>
@@ -58,26 +62,29 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="add-card-form">
-            ${alert}
-            <form method="post" action="/cards/add">
-                <div class="form-group">
-                    <label for="card_number">Card number</label>
-                    <input name="card_number" type="text" class="form-control" id="card_number" placeholder="Enter your card number" minlength="16" maxlength="16" onkeypress="return isNumber(event)" onpaste="return false;" required>
-                </div>
-                <div class="form-group">
-                    <label for="code">Code</label>
-                    <input name="code" type="text" class="form-control" id="code" placeholder="Enter card code" minlength="3" maxlength="4" onkeypress="return isNumber(event)" onpaste="return false;" required>
-                </div>
-                <div class="form-group">
-                    <label for="expiration_date">Expiration date</label>
-                    <input name="expiration_date" id="expiration_date" readonly>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-block btn-success shadow rounded">Add card</button>
-                </div>
-            </form>
-        </div>
+        <form class="base-form" method="post" action="/cards/add">
+            <c:if test="${alert != null}">
+                <div class="alert alert-${alert.type}">${alert.message}</div>
+            </c:if>
+            <div class="form-group">
+                <label for="card_number">Card number</label>
+                <input name="card_number" type="text" class="form-control" id="card_number"
+                       placeholder="Enter your card number" minlength="16" maxlength="16"
+                       onkeypress="return isNumber(event)" onpaste="return false;" required>
+            </div>
+            <div class="form-group">
+                <label for="code">Code</label>
+                <input name="code" type="text" class="form-control" id="code" placeholder="Enter card code"
+                       minlength="3" maxlength="4" onkeypress="return isNumber(event)" onpaste="return false;" required>
+            </div>
+            <div class="form-group">
+                <label for="expiration_date">Expiration date</label>
+                <input name="expiration_date" id="expiration_date" readonly>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-block btn-success shadow rounded">Add card</button>
+            </div>
+        </form>
     </div>
 </div>
 

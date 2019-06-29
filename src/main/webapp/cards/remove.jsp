@@ -1,5 +1,5 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 
 <!doctype html>
 <html lang="en">
@@ -25,7 +25,8 @@
             <img class="brand-image navbar-element" src="../assets/images/logo.png" alt="logo">
             <span class="brand-font navbar-element">&nbspPayments System</span>
         </a>
-        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarDropdown" aria-controls="navbarDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarDropdown"
+                aria-controls="navbarDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarDropdown">
@@ -37,7 +38,8 @@
                     <a class="nav-link" href="/send_payment">Send&nbsppayment</a>
                 </li>
                 <li class="nav-item dropdown active">
-                    <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuCards" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cards</a>
+                    <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuCards" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cards</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuCards">
                         <a class="dropdown-item" href="/cards/list">Cards list</a>
                         <a class="dropdown-item" href="/cards/add">Add card</a>
@@ -45,7 +47,8 @@
                     </div>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuAccount" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
+                    <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuAccount" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuAccount">
                         <a class="dropdown-item" href="/account/refill">Refill account</a>
                         <a class="dropdown-item" href="/account/block">Block account</a>
@@ -62,26 +65,30 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="remove-card-form">
-            ${alert}
-            <form method="post" action="/cards/remove">
-                <div class="form-group">
-                    <label for="cards_list">Choose a credit card to delete</label>
-                    <select name="card_number" class="form-control" id="cards_list">
+        <form class="base-form" method="post" action="/cards/remove">
+            <c:if test="${alert != null}">
+                <div class="alert alert-${alert.type}">${alert.message}</div>
+            </c:if>
+            <div class="form-group">
+                <label for="cards_list">Choose a credit card to delete</label>
+                <select name="card_info" class="form-control" id="cards_list">
+                    <c:if test="${creditCards != null}">
                         <c:forEach items="${creditCards}" var="creditCard">
-                            <option><c:out value="${creditCard.number}"/>, <c:out value="${creditCard.expirationDate}"/></option>
+                            <option><c:out value="${creditCard.number}"/>, <c:out
+                                    value="${creditCard.expirationDate}"/></option>
                         </c:forEach>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input name="password" type="password" class="form-control" id="password" placeholder="Enter your password to confirm operation" required>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-block btn-danger shadow rounded">Delete card</button>
-                </div>
-            </form>
-        </div>
+                    </c:if>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input name="password" type="password" class="form-control" id="password"
+                       placeholder="Enter your password to confirm operation" required>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-block btn-danger shadow rounded">Delete card</button>
+            </div>
+        </form>
     </div>
 </div>
 

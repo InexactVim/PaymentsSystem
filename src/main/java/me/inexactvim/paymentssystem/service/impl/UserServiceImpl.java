@@ -1,6 +1,8 @@
 package me.inexactvim.paymentssystem.service.impl;
 
 import me.inexactvim.paymentssystem.exception.*;
+import me.inexactvim.paymentssystem.exception.user.EmailIsInUsageException;
+import me.inexactvim.paymentssystem.exception.user.IncorrectCredentialsException;
 import me.inexactvim.paymentssystem.factory.ServiceFactory;
 import me.inexactvim.paymentssystem.object.Account;
 import me.inexactvim.paymentssystem.object.User;
@@ -24,13 +26,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUser(String email) throws DAOException, IncorrectCredentialsException {
-        Optional<User> userOptional = userRepository.loadByEmail(email);
-
-        if (!userOptional.isPresent()) {
-            throw new IncorrectCredentialsException("User not found");
-        }
-
-        return userOptional.get();
+        return userRepository.loadByEmail(email)
+                .orElseThrow(() -> new IncorrectCredentialsException("User not found"));
     }
 
     @Override

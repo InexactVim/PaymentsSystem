@@ -1,8 +1,8 @@
 package me.inexactvim.paymentssystem.service;
 
-import me.inexactvim.paymentssystem.exception.EmailIsInUsageException;
+import me.inexactvim.paymentssystem.exception.user.EmailIsInUsageException;
 import me.inexactvim.paymentssystem.exception.EmailMessagingException;
-import me.inexactvim.paymentssystem.exception.IncorrectCredentialsException;
+import me.inexactvim.paymentssystem.exception.user.IncorrectCredentialsException;
 import me.inexactvim.paymentssystem.exception.DAOException;
 import me.inexactvim.paymentssystem.object.User;
 

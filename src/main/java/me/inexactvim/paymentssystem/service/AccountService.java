@@ -1,8 +1,8 @@
 package me.inexactvim.paymentssystem.service;
 
-import me.inexactvim.paymentssystem.exception.AccountNotFoundException;
+import me.inexactvim.paymentssystem.exception.account.AccountNotFoundException;
 import me.inexactvim.paymentssystem.exception.DAOException;
-import me.inexactvim.paymentssystem.exception.NegativeBalanceException;
+import me.inexactvim.paymentssystem.exception.account.NegativeBalanceException;
 import me.inexactvim.paymentssystem.object.Account;
 
 import java.math.BigDecimal;

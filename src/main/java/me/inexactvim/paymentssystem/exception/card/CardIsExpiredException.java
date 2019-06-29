@@ -1,4 +1,4 @@
-package me.inexactvim.paymentssystem.exception;
+package me.inexactvim.paymentssystem.exception.card;
 
 public class CardIsExpiredException extends Exception {
 

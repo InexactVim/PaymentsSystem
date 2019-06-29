@@ -1,7 +1,7 @@
 body {
   font-family: 'Didact Gothic', sans-serif;
   background-color: #F7F4E9;
-  padding: 55px 0px 5px 0px;
+  padding: 55px 0 5px 0;
   min-width: 326px;
 }
 
@@ -35,75 +35,24 @@ body {
   font-weight: bold;
 }
 
-/* !!!!!!!!!!!!!! */
-/* ! Login page ! */
-/* !!!!!!!!!!!!!! */
-.login-form {
-  min-width: 306px;
-  width: 306px;
-  word-break: break-all;
-}
-
-@media (min-width: 470px) {
-  .login-form {
-    min-width: 406px;
-    width: 406px;
-  }
-}
-
-/* !!!!!!!!!!!!!!!!!!!!! */
-/* ! Registration page ! */
-/* !!!!!!!!!!!!!!!!!!!!! */
-.registration-form {
-  min-width: 306px;
-  width: 306px;
-  word-break: break-all;
-}
-
-@media (min-width: 470px) {
-  .registration-form {
-    min-width: 406px;
-    width: 406px;
-  }
-}
-
-/* !!!!!!!!!!!!!!!!!!!!!!! */
-/* ! Password reset page ! */
-/* !!!!!!!!!!!!!!!!!!!!!!! */
-.reset-password-form {
-  min-width: 306px;
-  width: 306px;
-  word-break: break-all;
-}
-
-@media (min-width: 470px) {
-  .reset-password-form {
-    min-width: 406px;
-    width: 406px;
-  }
-}
-
 /* !!!!!!!!!!!!! */
-/* ! User page ! */
+/* ! Base form ! */
 /* !!!!!!!!!!!!! */
+.base-form {
+  min-width: 306px;
+  width: 306px;
+  word-break: break-all;
+}
+
+@media (min-width: 470px) {
+  .base-form {
+    min-width: 406px;
+    width: 406px;
+  }
+}
+
 #log-out-btn {
   color: #EBA63F;
-}
-
-/* !!!!!!!!!!!!!!!!!!!!! */
-/* ! Remove cards form ! */
-/* !!!!!!!!!!!!!!!!!!!!! */
-.remove-card-form {
-  min-width: 306px;
-  width: 306px;
-  word-break: break-all;
-}
-
-@media (min-width: 470px) {
-  .remove-card-form {
-    width: 406px;
-    min-width: 406px;
-  }
 }
 
 .remove-card-font {
@@ -127,22 +76,6 @@ body {
 .table-column-header {
   font-size: 20px;
   line-height: 10px;
-}
-
-/* !!!!!!!!!!!!!!!!! */
-/* ! Add cards form ! */
-/* !!!!!!!!!!!!!!!!! */
-.add-card-form {
-  min-width: 306px;
-  width: 306px;
-  word-break: break-all;
-}
-
-@media (min-width: 470px) {
-  .add-card-form {
-    width: 406px;
-    min-width: 406px;
-  }
 }
 
 .add-card-font {

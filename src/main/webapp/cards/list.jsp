@@ -62,24 +62,28 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col text-center">
-            ${alert}
-            <h2>My cards</h2>
-            <table class="table table-hover">
-                <thead class="bg-color-dark">
-                <tr class="color-light table-column-header">
-                    <td>Card number</td>
-                    <td>Expiration date</td>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach items="${creditCards}" var="creditCard">
-                    <tr>
-                        <td><c:out value="${creditCard.number}"/></td>
-                        <td class="font-weight-bold"><c:out value="${creditCard.expirationDate}"/></td>
+            <c:if test="${alert != null}">
+                <div class="alert alert-${alert.type}">${alert.message}</div>
+            </c:if>
+            <c:if test="${creditCards != null}">
+                <h2>My cards</h2>
+                <table class="table table-hover">
+                    <thead class="bg-color-dark">
+                    <tr class="color-light table-column-header">
+                        <td>Card number</td>
+                        <td>Expiration date</td>
                     </tr>
-                </c:forEach>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${creditCards}" var="creditCard">
+                        <tr>
+                            <td><c:out value="${creditCard.number}"/></td>
+                            <td class="font-weight-bold"><c:out value="${creditCard.expirationDate}"/></td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </c:if>
         </div>
     </div>
 </div>

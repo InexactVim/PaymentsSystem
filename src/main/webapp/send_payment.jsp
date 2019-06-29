@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
 
@@ -57,9 +58,11 @@
 
   <div class="container">
     <div class="row justify-content-center">
-      <div class="login-form">
-        ${alert}
+      <div class="base-form">
         <form method="post" action="/send_payment">
+          <c:if test="${alert != null}">
+            <div class="alert alert-${alert.type}">${alert.message}</div>
+          </c:if>
           <div class="form-group">
             <label for="account_number">Account number</label>
             <input name="account_number" type="text" class="form-control" id="account_number" placeholder="Enter account number" minlength="11" maxlength="11" onkeypress="return isNumber(event);" onpaste="return false;" required>

@@ -1,4 +1,4 @@
-package me.inexactvim.paymentssystem.exception;
+package me.inexactvim.paymentssystem.exception.account;
 
 public class AccountBlockedException extends Exception {
 

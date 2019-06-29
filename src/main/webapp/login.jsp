@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8"%>
 
 <!doctype html>
@@ -28,26 +29,26 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="login-form">
-            ${alert}
-            <form method="post" action="/login">
-                <div class="form-group">
-                    <label for="email">Email address</label>
-                    <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter your email" maxlength="45" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input name="password" type="password" class="form-control" id="password" placeholder="Enter your password" required>
-                    <a class="form-text text-muted underlineHover" href="/reset_password">Forgot password?</a>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-block font-weight-bold shadow rounded bg-color-light-green">Log In</button>
-                </div>
-                <div>
-                    <a role="button" class="btn btn-block font-weight-bold shadow rounded bg-color-aqua" href="/register">Register</a>
-                </div>
-            </form>
-        </div>
+        <form class="base-form" action="/login" method="post">
+            <c:if test="${alert != null}">
+                <div class="alert alert-${alert.type}">${alert.message}</div>
+            </c:if>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter your email" maxlength="45" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input name="password" type="password" class="form-control" id="password" placeholder="Enter your password" required>
+                <a class="form-text text-muted underlineHover" href="/reset_password">Forgot password?</a>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-block font-weight-bold shadow rounded bg-color-light-green" onclick="onClick()">Log In</button>
+            </div>
+            <div>
+                <a role="button" class="btn btn-block font-weight-bold shadow rounded bg-color-aqua" href="/register">Register</a>
+            </div>
+        </form>
     </div>
 </div>
 
