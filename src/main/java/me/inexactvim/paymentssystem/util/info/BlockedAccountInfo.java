@@ -10,7 +10,7 @@ public class BlockedAccountInfo {
     private String number;
 
     public BlockedAccountInfo(String name, String surname, long accountNumber) {
-        holder = name + surname;
+        holder = name + " " + surname;
         number = NumberUtil.accountNumberFormat(accountNumber);
     }
 }

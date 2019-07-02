@@ -35,8 +35,8 @@ public class EmailServiceImpl implements EmailService {
                 mimeMessage.setSender(new InternetAddress(session.getProperty("mail.smtp.user")));
             }
             mimeMessage.setRecipients(Message.RecipientType.TO, recipient);
-            mimeMessage.setSubject(topic);
-            mimeMessage.setText(message);
+            mimeMessage.setSubject(topic, "utf-8");
+            mimeMessage.setText(message, "utf-8");
             Transport.send(mimeMessage);
         } catch (MessagingException e) {
             throw new EmailMessagingException(e);

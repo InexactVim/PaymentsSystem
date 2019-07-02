@@ -21,6 +21,7 @@ public class RegisterController extends AbstractController {
     @Override
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
         HttpSession httpSession = request.getSession(true);
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
