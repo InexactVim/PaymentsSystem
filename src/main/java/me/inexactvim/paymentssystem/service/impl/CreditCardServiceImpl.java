@@ -1,15 +1,17 @@
 package me.inexactvim.paymentssystem.service.impl;
 
-import me.inexactvim.paymentssystem.exception.card.CardIsExpiredException;
-import me.inexactvim.paymentssystem.exception.card.CardAlreadyAddedException;
-import me.inexactvim.paymentssystem.exception.card.CardNotFoundException;
 import me.inexactvim.paymentssystem.exception.DAOException;
+import me.inexactvim.paymentssystem.exception.card.CardAlreadyAddedException;
+import me.inexactvim.paymentssystem.exception.card.CardIsExpiredException;
+import me.inexactvim.paymentssystem.exception.card.CardNotFoundException;
 import me.inexactvim.paymentssystem.object.CreditCard;
 import me.inexactvim.paymentssystem.repository.CreditCardRepository;
 import me.inexactvim.paymentssystem.service.CreditCardService;
+import me.inexactvim.paymentssystem.util.info.CreditCardInfo;
 
 import java.sql.Date;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 public class CreditCardServiceImpl implements CreditCardService {
 
@@ -20,8 +22,17 @@ public class CreditCardServiceImpl implements CreditCardService {
     }
 
     @Override
-    public Collection<CreditCard> getAccountCreditCards(long accountNumber) throws DAOException {
-        return creditCardRepository.loadCreditCardsByAccountNumber(accountNumber);
+    public CreditCard getCreditCard(long number) throws DAOException, CardNotFoundException {
+        return creditCardRepository.loadCreditCard(number)
+                .orElseThrow(CardNotFoundException::new);
+    }
+
+    @Override
+    public Collection<CreditCardInfo> getAccountCreditCards(long accountNumber) throws DAOException {
+        return creditCardRepository.loadCreditCardsByAccountNumber(accountNumber)
+                .stream()
+                .map(CreditCardInfo::new)
+                .collect(Collectors.toList());
     }
 
     @Override

@@ -12,7 +12,8 @@ public class Alert {
 
         SUCCESS("success"),
         ERROR("danger"),
-        WARNING("warning");
+        WARNING("warning"),
+        INFO("info");
 
         private String name;
 

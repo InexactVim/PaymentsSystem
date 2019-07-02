@@ -9,13 +9,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {
-        "/",
-        "/user",
-        "/send_payment",
-        "/account/*",
-        "/cards/*"
-})
+@WebFilter(
+        urlPatterns = {
+                "/",
+                "/logout",
+                "/user",
+                "/send_payment",
+                "/account/*",
+                "/cards/*",
+        })
 public class UnauthorizedUserFilter extends HttpFilter {
 
     @Override

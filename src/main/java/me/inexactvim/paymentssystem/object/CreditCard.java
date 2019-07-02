@@ -7,7 +7,7 @@ import java.sql.Date;
 @Data
 public class CreditCard {
 
-    private long id;
+    private Long id;
     private long number;
     private short code;
     private Date expirationDate;

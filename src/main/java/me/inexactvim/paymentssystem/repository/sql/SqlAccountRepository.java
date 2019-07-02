@@ -5,11 +5,16 @@ import me.inexactvim.paymentssystem.object.Account;
 import me.inexactvim.paymentssystem.object.AccountStatus;
 import me.inexactvim.paymentssystem.repository.AccountRepository;
 import me.inexactvim.paymentssystem.sql.SqlDatabaseManager;
+import me.inexactvim.paymentssystem.util.info.BlockedAccountInfo;
 
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 
 public class SqlAccountRepository implements AccountRepository {
@@ -62,5 +67,38 @@ public class SqlAccountRepository implements AccountRepository {
     public void setAccountStatus(Account account, AccountStatus status) throws DAOException {
         databaseManager.executeUpdate("UPDATE accounts SET status=? WHERE number=?",
                 status.ordinal(), account.getNumber());
+    }
+
+    @Override
+    public Collection<BlockedAccountInfo> loadBlockedAccounts() throws DAOException {
+        return databaseManager.executeQuery("SELECT accounts.number AS number, users.name AS name, users.surname AS surname " +
+                        "FROM accounts " +
+                        "INNER JOIN users ON accounts.number=users.account_number " +
+                        "WHERE accounts.status=?",
+                resultSet -> {
+                    Collection<BlockedAccountInfo> blockedAccounts;
+
+                    if (resultSet.next()) {
+                        blockedAccounts = new ArrayList<>();
+                        blockedAccounts.add(fetchBlockedAccountFromResultSet(resultSet));
+
+                        while (resultSet.next()) {
+                            blockedAccounts.add(fetchBlockedAccountFromResultSet(resultSet));
+                        }
+                    } else {
+                        blockedAccounts = Collections.emptyList();
+                    }
+
+                    return blockedAccounts;
+                }, AccountStatus.BLOCKED.ordinal());
+    }
+
+    private BlockedAccountInfo fetchBlockedAccountFromResultSet(ResultSet resultSet) throws SQLException {
+        return new BlockedAccountInfo(
+                resultSet.getString(2),
+                resultSet.getString(3),
+                resultSet.getLong(1)
+
+        );
     }
 }

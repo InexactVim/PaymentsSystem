@@ -33,12 +33,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public User checkCredentialsAndGetUser(String email, String password) throws DAOException, IncorrectCredentialsException {
         User user = getUser(email);
+        checkPassword(user, password);
+        return user;
+    }
 
+    @Override
+    public void checkPassword(User user, String password) throws IncorrectCredentialsException {
         if (!passwordEncryption.isValid(password, user.getPassword())) {
             throw new IncorrectCredentialsException("User password is incorrect");
         }
-
-        return user;
     }
 
     @Override

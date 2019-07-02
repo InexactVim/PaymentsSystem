@@ -1,4 +1,8 @@
 package me.inexactvim.paymentssystem.controller;
 
-public class AdminController {
+import javax.servlet.annotation.WebServlet;
+
+@WebServlet("/admin")
+public class AdminController extends AbstractController {
+
 }

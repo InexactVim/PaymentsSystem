@@ -1,11 +1,14 @@
 package me.inexactvim.paymentssystem.controller.cards;
 
 import me.inexactvim.paymentssystem.controller.AbstractController;
-import me.inexactvim.paymentssystem.exception.card.CardIsExpiredException;
-import me.inexactvim.paymentssystem.exception.card.CardAlreadyAddedException;
 import me.inexactvim.paymentssystem.exception.DAOException;
-import me.inexactvim.paymentssystem.object.Account;
+import me.inexactvim.paymentssystem.exception.card.CardAlreadyAddedException;
+import me.inexactvim.paymentssystem.exception.card.CardIsExpiredException;
+import me.inexactvim.paymentssystem.object.User;
 import me.inexactvim.paymentssystem.util.DateUtil;
+import me.inexactvim.paymentssystem.util.NumberUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,11 +22,13 @@ import java.text.ParseException;
 @WebServlet("/cards/add")
 public class AddController extends AbstractController {
 
+    private static Logger logger = LoggerFactory.getLogger(AddController.class);
+    
     @Override
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(true);
-        Account account = getSessionAttribute(session, "account");
+        User user = getSessionAttribute(session, "user");
 
         long cardNumber;
         try {
@@ -50,10 +55,11 @@ public class AddController extends AbstractController {
         }
 
         try {
-            creditCardService.addCreditCard(account.getNumber(), cardNumber, code, expirationDate);
+            creditCardService.addCreditCard(user.getAccountNumber(), cardNumber, code, expirationDate);
             alertSuccess("Credit card added", request, response);
+            logger.info("Added new credit card (" + NumberUtil.creditCardNumberFormat(cardNumber) + ")");
         } catch (DAOException e) {
-            e.printStackTrace();
+            logger.error("An error occurred with database while adding a new card (" + NumberUtil.creditCardNumberFormat(cardNumber) + ")", e);
             alertError("An error occurred. Please, try again later", request, response);
         } catch (CardAlreadyAddedException e) {
             alertError("This card is already added", request, response);

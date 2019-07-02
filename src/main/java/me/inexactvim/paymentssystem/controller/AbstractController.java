@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Collection;
 
-public class AbstractController extends HttpServlet {
+public abstract class AbstractController extends HttpServlet {
 
     protected static AccountService accountService;
     protected static CreditCardService creditCardService;
@@ -31,9 +31,18 @@ public class AbstractController extends HttpServlet {
 
     private String pattern;
 
+    public AbstractController() {
+    }
+
+    public AbstractController(String pattern) {
+        this.pattern = pattern;
+    }
+
     @Override
     public void init() {
-        pattern = getMappings().iterator().next();
+        if (pattern == null) {
+            pattern = getMappings().iterator().next();
+        }
     }
 
     @Override
@@ -73,6 +82,12 @@ public class AbstractController extends HttpServlet {
         alert0(message, Alert.Type.WARNING, request, response);
     }
 
+    protected void alertInfo(String message,
+                             HttpServletRequest request,
+                             HttpServletResponse response) throws IOException, ServletException {
+        alert0(message, Alert.Type.INFO, request, response);
+    }
+
     private void alert0(String message,
                         Alert.Type type,
                         HttpServletRequest request,
@@ -94,4 +109,6 @@ public class AbstractController extends HttpServlet {
     private Collection<String> getMappings() {
         return getServletContext().getServletRegistration(getServletName()).getMappings();
     }
+
+
 }

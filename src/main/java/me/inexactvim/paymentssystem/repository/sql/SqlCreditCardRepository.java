@@ -12,6 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
 
 public class SqlCreditCardRepository implements CreditCardRepository {
 
@@ -19,6 +20,13 @@ public class SqlCreditCardRepository implements CreditCardRepository {
 
     public SqlCreditCardRepository(SqlDatabaseManager databaseManager) {
         this.databaseManager = databaseManager;
+    }
+
+    @Override
+    public Optional<CreditCard> loadCreditCard(long number) throws DAOException {
+        return Optional.ofNullable(databaseManager.executeQuery("SELECT * FROM credit_cards WHERE number=?",
+                resultSet -> resultSet.next() ? fetchCreditCardFromResultSet(resultSet) : null,
+                number));
     }
 
     @Override

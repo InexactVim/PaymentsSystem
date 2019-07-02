@@ -11,10 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {
-        "/admin",
-        "/admin/*"
-})
+@WebFilter(
+        urlPatterns = {
+                "/admin",
+                "/admin/*"
+        })
 public class AdminFilter extends HttpFilter {
 
     @Override

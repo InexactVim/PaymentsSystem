@@ -1,10 +1,12 @@
 package me.inexactvim.paymentssystem.controller;
 
+import me.inexactvim.paymentssystem.exception.DAOException;
 import me.inexactvim.paymentssystem.exception.account.AccountBlockedException;
 import me.inexactvim.paymentssystem.exception.account.AccountNotFoundException;
-import me.inexactvim.paymentssystem.exception.DAOException;
 import me.inexactvim.paymentssystem.exception.account.NegativeBalanceException;
-import me.inexactvim.paymentssystem.object.Account;
+import me.inexactvim.paymentssystem.object.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,11 +19,13 @@ import java.math.BigDecimal;
 @WebServlet("/send_payment")
 public class SendPaymentController extends AbstractController {
 
+    private static Logger logger = LoggerFactory.getLogger(SendPaymentController.class);
+
     @Override
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(true);
-        Account account = getSessionAttribute(session, "account");
+        User user = getSessionAttribute(session, "user");
 
         long recipientAccountNumber;
         try {
@@ -31,7 +35,7 @@ public class SendPaymentController extends AbstractController {
             return;
         }
 
-        if (recipientAccountNumber == account.getNumber()) {
+        if (recipientAccountNumber == user.getAccountNumber()) {
             alertError("You can not send payments to your account", request, response);
             return;
         }
@@ -47,9 +51,11 @@ public class SendPaymentController extends AbstractController {
         String comment = request.getParameter("comment");
 
         try {
-            paymentService.createPayment(account.getNumber(), recipientAccountNumber, amount, comment);
-            alertSuccess("Payment successfully completed", request, response);
+            paymentService.createPayment(user.getAccountNumber(), recipientAccountNumber, amount, comment);
+            alertSuccess("Payment was successfully completed", request, response);
+            logger.info("A new payment has just successfully completed (sender: " + user.getAccountNumber() + ", recipient: " + recipientAccountNumber + ", amount: " + amount + ", comment: '" + comment + "')");
         } catch (DAOException e) {
+            logger.error("An error occurred with database", e);
             alertError("An error occurred. Please, try again later", request, response);
         } catch (AccountNotFoundException e) {
             alertError("Account not found", request, response);

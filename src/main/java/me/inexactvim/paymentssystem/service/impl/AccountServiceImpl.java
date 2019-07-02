@@ -1,14 +1,17 @@
 package me.inexactvim.paymentssystem.service.impl;
 
 import me.inexactvim.paymentssystem.exception.DAOException;
+import me.inexactvim.paymentssystem.exception.account.AccountBlockedException;
 import me.inexactvim.paymentssystem.exception.account.AccountNotFoundException;
 import me.inexactvim.paymentssystem.exception.account.NegativeBalanceException;
 import me.inexactvim.paymentssystem.object.Account;
 import me.inexactvim.paymentssystem.object.AccountStatus;
 import me.inexactvim.paymentssystem.repository.AccountRepository;
 import me.inexactvim.paymentssystem.service.AccountService;
+import me.inexactvim.paymentssystem.util.info.BlockedAccountInfo;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 
 public class AccountServiceImpl implements AccountService {
 
@@ -53,9 +56,18 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void blockAccount(Account account) throws DAOException {
+    public void blockAccount(Account account) throws DAOException, AccountBlockedException {
+        if (account.getStatus() == AccountStatus.BLOCKED) {
+            throw new AccountBlockedException("Account already blocked");
+        }
+
         accountRepository.setAccountStatus(account, AccountStatus.BLOCKED);
         account.setStatus(AccountStatus.BLOCKED);
+    }
+
+    @Override
+    public Collection<BlockedAccountInfo> getBlockedAccounts() throws DAOException {
+        return accountRepository.loadBlockedAccounts();
     }
 
     @Override

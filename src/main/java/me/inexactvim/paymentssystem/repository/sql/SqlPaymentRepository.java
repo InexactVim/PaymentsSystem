@@ -23,7 +23,7 @@ public class SqlPaymentRepository implements PaymentRepository {
 
     @Override
     public Collection<Payment> loadAccountPayments(long accountNumber) throws DAOException {
-        return databaseManager.executeQuery("SELECT * FROM payments WHERE sender_account_number=? OR recipient_account_number=?", resultSet -> {
+        return databaseManager.executeQuery("SELECT * FROM payments WHERE sender_account_number=? OR recipient_account_number=? ORDER BY time DESC", resultSet -> {
             Collection<Payment> payments;
 
             if (resultSet.next()) {

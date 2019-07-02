@@ -13,7 +13,6 @@ public class LogoutController extends AbstractController {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession(true);
         session.removeAttribute("user");
-        session.removeAttribute("account");
         resp.sendRedirect("/login");
     }
 }

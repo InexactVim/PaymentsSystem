@@ -11,11 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {
-        "/login",
-        "/reset_password",
-        "/register"
-})
+@WebFilter(
+        urlPatterns = {
+                "/login",
+                "/reset_password",
+                "/register"
+        })
 public class AuthorizedUserFilter extends HttpFilter {
 
     @Override

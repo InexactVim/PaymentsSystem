@@ -1,10 +1,10 @@
 package me.inexactvim.paymentssystem.controller;
 
-import me.inexactvim.paymentssystem.exception.account.AccountNotFoundException;
 import me.inexactvim.paymentssystem.exception.DAOException;
 import me.inexactvim.paymentssystem.exception.user.EmailIsInUsageException;
-import me.inexactvim.paymentssystem.object.Account;
 import me.inexactvim.paymentssystem.object.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,6 +15,8 @@ import java.io.IOException;
 
 @WebServlet("/register")
 public class RegisterController extends AbstractController {
+
+    private static Logger logger = LoggerFactory.getLogger(RegisterController.class);
 
     @Override
     protected void doPost(HttpServletRequest request,
@@ -27,20 +29,18 @@ public class RegisterController extends AbstractController {
 
         try {
             User user = userService.saveUser(name, surname, email, password);
-            Account account = accountService.getAccount(user.getAccountNumber());
             httpSession.invalidate();
             httpSession = request.getSession(true);
             httpSession.setMaxInactiveInterval(15 * 60);
             httpSession.setAttribute("user", user);
-            httpSession.setAttribute("account", account);
             clearAttributes(request);
             response.sendRedirect("/user");
+            logger.info("A new user has just registered (email: " + email + ")");
         } catch (DAOException e) {
+            logger.error("An error occurred with database while saving user data", e);
             alertError("An error occurred. Please, try again later", request, response);
         } catch (EmailIsInUsageException e) {
             alertError("This email is already in use", request, response);
-        } catch (AccountNotFoundException e) {
-            alertError("Your account is not available. Contact the administrator", request, response);
         }
     }
 }

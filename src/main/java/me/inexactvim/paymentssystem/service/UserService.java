@@ -12,6 +12,8 @@ public interface UserService {
 
     User checkCredentialsAndGetUser(String email, String password) throws DAOException, IncorrectCredentialsException;
 
+    void checkPassword(User user, String password) throws IncorrectCredentialsException;
+
     User saveUser(String name, String surname, String email, String password) throws DAOException, EmailIsInUsageException;
 
     void resetUserPassword(String email) throws DAOException, IncorrectCredentialsException, EmailMessagingException;

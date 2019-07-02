@@ -55,10 +55,6 @@ body {
   color: #EBA63F;
 }
 
-.remove-card-font {
-  font-size: 20px;
-}
-
 /* !!!!!!!!!!!!!!!!!!!!! */
 /* ! Remove cards form ! */
 /* !!!!!!!!!!!!!!!!!!!!! */
@@ -76,10 +72,6 @@ body {
 .table-column-header {
   font-size: 20px;
   line-height: 10px;
-}
-
-.add-card-font {
-  font-size: 20px;
 }
 
 .color-blue {

@@ -3,8 +3,10 @@ package me.inexactvim.paymentssystem.repository;
 import me.inexactvim.paymentssystem.exception.DAOException;
 import me.inexactvim.paymentssystem.object.Account;
 import me.inexactvim.paymentssystem.object.AccountStatus;
+import me.inexactvim.paymentssystem.util.info.BlockedAccountInfo;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Optional;
 
 public interface AccountRepository {
@@ -17,4 +19,5 @@ public interface AccountRepository {
 
     void setAccountStatus(Account account, AccountStatus status) throws DAOException;
 
+    Collection<BlockedAccountInfo> loadBlockedAccounts() throws DAOException;
 }

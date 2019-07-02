@@ -1,9 +1,3 @@
-<%--@elvariable id="error" type="java.lang.String"--%>
-<%--@elvariable id="name" type="java.lang.String"--%>
-<%--@elvariable id="surname" type="java.lang.String"--%>
-<%--@elvariable id="email" type="java.lang.String"--%>
-<%--@elvariable id="balance" type="java.math.BigDecimal"--%>
-<%--@elvariable id="accountNumber" type="java.lang.Long"--%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
@@ -46,17 +40,17 @@
                     <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuCards" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cards</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuCards">
-                        <a class="dropdown-item" href="cards/list">Show cards</a>
-                        <a class="dropdown-item" href="cards/add">Add card</a>
-                        <a class="dropdown-item" href="cards/remove">Remove card</a>
+                        <a class="dropdown-item" href="/cards/list">Show cards</a>
+                        <a class="dropdown-item" href="/cards/add">Add card</a>
+                        <a class="dropdown-item" href="/cards/remove">Remove card</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuAccount" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuAccount">
-                        <a class="dropdown-item" href="account/refill">Refill account</a>
-                        <a class="dropdown-item" href="account/block">Block account</a>
+                        <a class="dropdown-item" href="/account/refill">Refill account</a>
+                        <a class="dropdown-item" href="/account/block">Block account</a>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -79,6 +73,7 @@
                 <img src="assets/images/user-logo.png" width="150" height="auto" alt="user logo">
                 <p>
                 <h2><c:out value="${user.name}"/> <c:out value="${user.surname}"/></h2>
+                </p>
                 <div class="text-muted"><c:out value="${user.email}"/></div>
                 <p>
                 <h3>Balance: <span class="color-orange"><c:out value="${accountDisplay.balance}"/>$</span></h3>
@@ -90,24 +85,22 @@
             <c:if test="${payments != null}">
                 <p>
                 <h2>Payments History</h2>
-                <table class="table table-hover">
+                <table class="table table-hover table-responsive-sm">
                     <thead class="bg-color-table">
                     <tr class="color-dark table-column-header">
-                        <td>Date</td>
-                        <td>Info</td>
-                        <td>Sum</td>
+                        <th>Date</th>
+                        <th>Info</th>
+                        <th>Sum</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${payments}" var="payment">
                         <tr>
-                            <td><span class="color-aqua"><c:out value="${payment.date}"/></span></td>
-                            <td>
-                                <c:out value="${payment.info}"/>
-                                <br>
-                                <span class="text-muted"><c:out value="${payment.comment}"/></span>
+                            <td><span class="color-aqua">${payment.date}</span></td>
+                            <td>${payment.info}<br>
+                                <span class="text-muted" style="font-size: 16px; text">${payment.comment}</span>
                             </td>
-                            <td><c:out value="${payment.total}"/>$</td>
+                            <td>${payment.total}</td>
                         </tr>
                     </c:forEach>
                     </tbody>

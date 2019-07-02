@@ -1,10 +1,11 @@
 package me.inexactvim.paymentssystem.controller;
 
-import me.inexactvim.paymentssystem.exception.account.AccountNotFoundException;
 import me.inexactvim.paymentssystem.exception.DAOException;
 import me.inexactvim.paymentssystem.exception.user.IncorrectCredentialsException;
-import me.inexactvim.paymentssystem.object.Account;
 import me.inexactvim.paymentssystem.object.User;
+import me.inexactvim.paymentssystem.object.UserRole;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,6 +17,8 @@ import java.io.IOException;
 @WebServlet("/login")
 public class LoginController extends AbstractController {
 
+    private static Logger logger = LoggerFactory.getLogger(LoginController.class);
+
     @Override
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
@@ -25,19 +28,22 @@ public class LoginController extends AbstractController {
 
         try {
             User user = userService.checkCredentialsAndGetUser(email, password);
-            Account account = accountService.getAccount(user.getAccountNumber());
             httpSession.invalidate();
             httpSession = request.getSession(true);
             httpSession.setMaxInactiveInterval(15 * 60);
-            httpSession.setAttribute("account", account);
             httpSession.setAttribute("user", user);
-            response.sendRedirect("/user");
+            if (user.getRole() == UserRole.CLIENT) {
+                response.sendRedirect("/user");
+            } else {
+                response.sendRedirect("/admin");
+            }
+            logger.info("User " + user.getName() + " " + user.getSurname() + " has just logged in");
         } catch (DAOException e) {
+            logger.error("An error occurred with database while loading user data", e);
             alertError("An error occurred. Please, try again later", request, response);
         } catch (IncorrectCredentialsException e) {
+            logger.warn("Someone has tried to logged in with incorrect credentials (Email: '" + email + ", Info: '" + e.getMessage() + "'')");
             alertError(e.getMessage(), request, response);
-        } catch (AccountNotFoundException e) {
-            alertError("Your account is not available. Contact the administrator", request, response);
         }
     }
 }

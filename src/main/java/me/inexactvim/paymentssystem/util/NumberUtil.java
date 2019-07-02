@@ -14,7 +14,7 @@ public class NumberUtil {
     }
 
     public static String amountFormat(BigDecimal bigDecimal) {
-        return (bigDecimal.compareTo(BigDecimal.ZERO) > 0 ? "+" : "") + DECIMAL_FORMAT.format(bigDecimal);
+        return DECIMAL_FORMAT.format(bigDecimal);
     }
 
     public static String accountNumberFormat(long accountNumber) {

@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 @Data
 public class Payment {
 
-    private long id;
+    private Long id;
     private long senderAccountNumber;
     private long recipientAccountNumber;
     private BigDecimal amount;
