@@ -36,7 +36,7 @@ public class UnblockAccountController extends AbstractController {
             blockedAccounts.removeIf(blockedAccountInfo -> blockedAccountInfo.getNumber().equals(accountNumberString));
             if (blockedAccounts.isEmpty()) {
                 session.removeAttribute("blockedAccounts");
-                alertWarning("There are no cards to unblock", request, response);
+                alertWarning("There are no accounts to unblock", request, response);
             } else {
                 session.setAttribute("blockedAccounts", blockedAccounts);
                 alertSuccess("Account successfully unblocked", request, response);
@@ -63,7 +63,7 @@ public class UnblockAccountController extends AbstractController {
             Collection<BlockedAccountInfo> blockedAccounts = accountService.getBlockedAccounts();
             if (blockedAccounts.isEmpty()) {
                 session.removeAttribute("blockedAccounts");
-                alertWarning("There are no cards to unblock", request, response);
+                alertWarning("There are no accounts to unblock", request, response);
             } else {
                 session.setAttribute("blockedAccounts", blockedAccounts);
                 super.doGet(request, response);
